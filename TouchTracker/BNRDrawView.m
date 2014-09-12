@@ -153,15 +153,37 @@
 {
     NSLog(@"Recognized Double Tap");
     
-    CGPoint point = [gr locationInView:self];
-    self.selectedLine = [self lineAtPoint:point];
-    
+    [self.linesInProgress removeAllObjects];
+    [self.finishedLines removeAllObjects];
     [self setNeedsDisplay];
 }
 
 -(void)tap:(UIGestureRecognizer *)gr
 {
     NSLog(@"Recognized Tap");
+    
+    CGPoint point = [gr locationInView:self];
+    self.selectedLine = [self lineAtPoint:point];
+    
+    if (self.selectedLine) {
+        //Make this the target of  menu item action messages
+        [self becomeFirstResponder];
+        
+        //Grab the menu controller
+        UIMenuController *menu = [UIMenuController sharedMenuController];
+        
+        //Create a new "Delete" UIMenuItem
+        UIMenuItem *deleteItem = [[UIMenuItem alloc] initWithTitle:@"Delete"
+                                                            action:@selector(deleteLine:)];
+        
+        //Tell the menu where it should come from and show itself
+        [menu setTargetRect:CGRectMake(point.x, point.y, 2, 2) inView:self];
+        [menu setMenuVisible:YES animated:YES];
+    }else{
+        //Hide the menu if no line is selected
+        [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
+    }
+    [self setNeedsDisplay];
 }
 
 -(BNRLine *)lineAtPoint:(CGPoint)p
@@ -184,6 +206,11 @@
     }
     //If nothing is close enough to the tapped point, then a line is not selected
     return nil;
+}
+
+-(BOOL)canBecomeFirstResponder
+{
+    return YES;
 }
 
 @end
