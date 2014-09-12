@@ -175,7 +175,7 @@
         //Create a new "Delete" UIMenuItem
         UIMenuItem *deleteItem = [[UIMenuItem alloc] initWithTitle:@"Delete"
                                                             action:@selector(deleteLine:)];
-        
+        menu.menuItems = @[deleteItem];
         //Tell the menu where it should come from and show itself
         [menu setTargetRect:CGRectMake(point.x, point.y, 2, 2) inView:self];
         [menu setMenuVisible:YES animated:YES];
@@ -211,6 +211,15 @@
 -(BOOL)canBecomeFirstResponder
 {
     return YES;
+}
+
+-(void)deleteLine:(id)sender
+{
+    //Remove the selected line from the list of finishedLines
+    [self.finishedLines removeObject:self.selectedLine];
+    
+    //Redraw everything
+    [self setNeedsDisplay];
 }
 
 @end
