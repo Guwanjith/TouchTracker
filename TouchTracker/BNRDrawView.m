@@ -29,6 +29,13 @@
         
         //Enable multiple touches
         self.multipleTouchEnabled = YES;
+        
+        //Enable double taps
+        UITapGestureRecognizer *doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                              action:@selector(doubleTap:)];
+        doubleTapRecognizer.numberOfTapsRequired = 2;
+        
+        [self addGestureRecognizer:doubleTapRecognizer];
     }
     
     return self;
@@ -126,6 +133,15 @@
         [self.linesInProgress removeObjectForKey:key];
     }
     
+    [self setNeedsDisplay];
+}
+
+-(void)doubleTap:(UIGestureRecognizer *)gr
+{
+    NSLog(@"Recognized Double Tap");
+    
+    [self.linesInProgress removeAllObjects];
+    [self.finishedLines removeAllObjects];
     [self setNeedsDisplay];
 }
 @end
