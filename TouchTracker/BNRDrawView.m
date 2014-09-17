@@ -273,8 +273,8 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
         //Add the translation to  the current beginning and end position of the line
         CGPoint begin = self.selectedLine.begin;
         CGPoint end = self.selectedLine.end;
-        begin.x = translation.x;
-        begin.y = translation.y;
+        begin.x += translation.x;
+        begin.y += translation.y;
         end.x += translation.x;
         end.y += translation.y;
         
