@@ -284,6 +284,9 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
         
         //Redraw the screen
         [self setNeedsDisplay];
+        
+        [gr setTranslation:CGPointZero
+                    inView:self];
     }
 }
 @end
