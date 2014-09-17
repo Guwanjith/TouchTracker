@@ -44,7 +44,12 @@
         tapRecognizer.delaysTouchesBegan = YES;
         [tapRecognizer requireGestureRecognizerToFail:doubleTapRecognizer];
         [self addGestureRecognizer:tapRecognizer];
-    }
+        
+        UILongPressGestureRecognizer *pressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self
+                                                                                                      action:@selector(longPress:)];
+        [self addGestureRecognizer:pressRecognizer];
+    };
+    
     
     return self;
 }
